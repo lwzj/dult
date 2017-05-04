@@ -1,0 +1,25 @@
+.main .row{
+	font-size: 18px;
+	border:1px solid #000;
+	margin-top:50px;
+	padding: 30px;
+	position: relative;
+}
+input,textarea{
+	background: rgba(255,255,255,0);
+	border: none;
+}
+.row header{
+	position: absolute;
+	top: -14px;
+	left: 0;
+	background: #f8f8f8;
+}
+.form{
+	position: relative;
+}
+.location{
+	position: absolute;
+	top: -50px;
+	right: 0;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html  class="no-js" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="stylesheet" href="../../static/student/css/index.css" th:href="@{/student/css/index.css}"/>
+<link rel="stylesheet" type="text/css" href="../../static/student/css/stu_apply.css" th:href="@{/student/css/stu_apply.css}"/>
+<script type="text/javascript" src="../../static/js/jquery-1.10.2.min.js"  th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script type="text/javascript" src="../../static/js/bootstrap.js"  th:src="@{/js/bootstrap.js}"></script>
+<!--[if lte IE 9]>
+	<script src="../../static/js/respond.js" th:src="@{/js/respond.js}"></script>
+	<script src="../../static/js/html5shiv.min.js" th:src="@{/js/html5shiv.min.js}"></script>
+<![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a th:href="@{/}" class="btn hidden-xs"><img src="../../static/img/test.png" th:src="@{/img/test.png}"  style="width:150px"/></a>
+        <h2 class="btn btn-title ">大连理工大学就业管理与服务平台</h2>
+    </div>
+    <div class=" navbar-collapse  collapse">
+        <ul class="nav navbar-nav navbar-right ">
+            <li ><a th:text="${session.user.depName}" th:data-id="${session.user.id}" id="identity">我是学生</a></li>
+            <li><a th:href="@{/logout.html}" class="btn btn-default">退出</a></li>
+            <li><a></a></li>
+        </ul>
+    </div>
+
+</nav>
+<section class="container-fluid con">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-3" style="z-index: 999;">
+            <div class="collapse navbar-collapse">
+                <aside class="aside">
+                    <ul class="nav nav-pills nav-stacked">
+                       <li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>我的主页</a></li>
+                        <li><a th:href="@{/student/stuInformation.html}"><span class="glyphicon glyphicon-align-left"></span>学籍信息</a></li>
+                        <li><a th:href="@{/student/JobDestination?stuId=}+${session.user.id}"><span class="glyphicon glyphicon-align-left"></span>就业去向</a></li>
+                        <!--<li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>招聘需求</a></li>-->
+                        <li><a th:href="@{/student/stu_offer.html}"><span class="glyphicon glyphicon-align-left"></span>我的offer</a></li>
+                        <li><a th:href="@{/student/agreement.html}"><span class="glyphicon glyphicon-align-left"></span>三方协议</a></li>
+                        <li><a th:href="@{/student/recruitmentQuery/stuRecruitment.html}"><span class="glyphicon glyphicon-align-left"></span>招聘会</a></li>
+                   		<li><a th:href="@{/student/stuBlankBook}"><span></span>空白协议书</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-9">
+            <div class="main">
+				<h2 style="font:30px/1 '微软雅黑';margin-bottom: 10px;"><strong>空白协议书申请</strong></h2>
+				<form class="form-horizontal col-lg-8">
+					<div class="row">
+						<label class="col-lg-2 col-md-2 col-sm-2 control-label">姓名：</label>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<input type="text"  th:value="${session.user.realName}" name="stuName" readonly class="form-control"/>
+						</div>
+						<label class="col-lg-2 col-md-2 col-sm-2 control-label">学号：</label>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+							<input type="text" th:value="${session.user.userName}" name="stuNo" readonly class="form-control" />
+						</div>
+					</div>
+					<div class="row" style="">
+						<label class="col-lg-2 col-md-2 col-sm-2 control-label">申请原因：</label>
+						<div class="col-lg-10 col-md-10 col-sm-10">
+							<select name="applicationReason" id="applicationReason" class="form-control">
+                                <option value="0">请选择</option>
+                                <option th:each="reason, blankProReasonS : ${blankProReason}" th:value="${reason.key}" th:text="${reason.value}"></option>
+                            </select>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-lg-2 col-md-2 col-sm-2 control-label">备注：</label>
+						<div class="col-lg-10 col-md-10 col-sm-10">
+							<textarea id="applicationReasonRemarks"  name="applicationReasonRemarks" rows="4" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-3 col-sm-offset-2">
+						<input type="button" id="btn" value="申请" class="btn btn-primary form-control"/>
+                    </div>
+				</form>
+            </div>
+        </div>
+    </div>
+    </section>
+</body>
+<script th:inline="javascript">
+    $('#btn').click(function(){
+        var applicationReason =$('#applicationReason').val();
+        var applicationReasonRemarks = $('#applicationReasonRemarks').val();
+
+        if('0'==applicationReason){
+            alert("请选择申请理由");
+        }else{
+            $.post(
+            "/student/saveBPro",
+            {
+            applicationReason:applicationReason,
+            applicationReasonRemarks:applicationReasonRemarks},
+            function(data){
+                console.log(data);
+                alert(data.msg);
+                window.location.href=data.url;
+            });
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html  class="no-js" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="stylesheet" href="../../static/student/css/index.css" th:href="@{/student/css/index.css}"/>
+<link rel="stylesheet" href="../../static/student/css/stu_employment.css" th:href="@{/student/css/stu_employment.css}"/>
+<script type="text/javascript" src="../../static/js/jquery-1.10.2.min.js"  th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script type="text/javascript" src="../../static/js/bootstrap.js"  th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript" src="../../static/student/js/stu_agreement.js"  th:src="@{/student/js/stu_agreement.js}"></script>
+<!--[if lte IE 9]>
+	<script src="../../static/js/respond.js" th:src="@{/js/respond.js}"></script>
+	<script src="../../static/js/html5shiv.min.js" th:src="@{/js/html5shiv.min.js}"></script>
+<![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a th:href="@{/}" class="btn hidden-xs"><img src="../../static/img/test.png" th:src="@{/img/test.png}" style="width:150px"/></a>
+        <h2 class="btn btn-title ">大连理工大学就业管理与服务平台</h2>
+    </div>
+    <div class=" navbar-collapse  collapse">
+        <ul class="nav navbar-nav navbar-right ">
+            <li ><a th:text="${session.user.depName}" th:data-id="${session.user.id}" id="identity">我是学生</a></li>
+            <li><a th:href="@{/logout.html}" class="btn btn-default">退出</a></li>
+            <li><a></a></li>
+        </ul>
+    </div>
+
+</nav>
+<section class="container-fluid con">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-3" style="z-index: 999;">
+            <div class="collapse navbar-collapse">
+                <aside class="aside">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>我的主页</a></li>
+                        <li><a th:href="@{/student/stuInformation.html}"><span class="glyphicon glyphicon-align-left"></span>学籍信息</a></li>
+                        <li><a th:href="@{/student/JobDestination?stuId=}+${session.user.id}"><span class="glyphicon glyphicon-align-left"></span>就业去向</a></li>
+                        <!--<li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>招聘需求</a></li>-->
+                        <li><a th:href="@{/student/stu_offer.html}"><span class="glyphicon glyphicon-align-left"></span>我的offer</a></li>
+                        <li><a th:href="@{/student/agreement.html}"><span class="glyphicon glyphicon-align-left"></span>三方协议</a></li>
+                        <li><a th:href="@{/student/recruitmentQuery/stuRecruitment.html}"><span class="glyphicon glyphicon-align-left"></span>招聘会</a></li>
+                   		<li><a th:href="@{/student/stuBlankBook}"><span></span>空白协议书</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-9">
+            <div class="main">
+				<h2 style="font:30px/1 '微软雅黑';margin-bottom: 10px;"><strong>我的就业协议书</strong></h2>
+				<form action="/student/agreementApply.html" class="form-horizontal form">
+					<div class="location">
+						<a class="btn btn-default pull-right">查看违约信息</a>
+						<button class="btn btn-default pull-right" type="submit">违约申请</button>
+						<input type="hidden" id="val1" th:value="${violateApplication}" />
+					</div>
+				<div class="row">
+					<header><strong>学生基本信息</strong></header>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">姓名：</div>
+						<div class=" pull-left">
+							<input th:value="${recOffer.realName}" type="text"   readonly  name="realName"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">学历：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('eduDegree',recOffer.eduDegree)}" readonly name="eduDegree"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">身份证号：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.idCard}" readonly name="idCard"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">民族：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('ethnic',recOffer.ethnic)}"  readonly name="ethnic"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">所在院系：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('academy',recOffer.departmentId)}"   readonly name="departmentId"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">专业：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('major',recOffer.majorCode)}" readonly name="majorCode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">生源地：</div>
+						<div class=" pull-left">
+							<input type="text"   th:value="${recOffer.homeland}"  readonly name="homeland"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">学号：</div>
+						<div class=" pull-left">
+							<input type="text"   th:value="${recOffer.stuNo}"  readonly name="stuNo"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">就读时间：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.startDate}"  readonly name="startDate"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">培养方式：</div>
+						<div class=" pull-left">
+							<input type="text" th:value="${#pubcode.codeName('eduMode',recOffer.eduMode)}"    readonly name="eduMode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">毕业去向：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('graduateTo',recOffer.destinationType)}"  readonly name="destinationType"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">工作职位类别：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${#pubcode.codeName('jobType',recOffer.category)}"  readonly name="category"  />
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<header><strong>就业单位信息</strong></header>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位名称：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recName}"  readonly name="recName"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">组织机构代码：</div>
+						<div class=" pull-left">
+							<input type="text"   th:value="${recOffer.orgCode}"   readonly name="orgCode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位行业：</div>
+						<div class=" pull-left">
+							<input type="text"   th:value="${#pubcode.codeName('industry',recOffer.industry)}"   readonly name="industry"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位性质：</div>
+						<div class=" pull-left">
+							<input type="text" th:value="${#pubcode.codeName('nature',recOffer.nature)}"  readonly name="nature"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位所在地：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recCity}"  readonly name="recCity"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位邮编：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recZipcode}" readonly name="recZipcode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">详细地址：</div>
+						<div class=" pull-left">
+							<input type="text" th:value="${recOffer.recAddress}"  readonly name="recAddress"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">隶属部门：</div><!--111111111111111111-->
+						<div class=" pull-left">
+							<input type="text" th:value="${recOffer.departmentBelong}"   readonly name="departmentBelong"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">单位联系人：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recLinker}"  readonly name="recLinker"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">联系人手机：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recMobile}" readonly name="recMobile"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">联系人电话：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.recTelphone}"  readonly name="recTelphone"  />
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<header><strong>档案转寄信息</strong></header>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">档案转寄单位名称：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.pfileToName}"  readonly name="pfileToName"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">档案转寄部门：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.pfileToDepart}"  readonly name="pfileToDepart"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">档案转寄地址：</div>
+						<div class=" pull-left">
+							<input type="text"   th:value="${recOffer.pfileToAddress}" readonly name="pfileToAddress	"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">档案转寄邮编：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.pfileToZipcode}"  readonly name="pfileToZipcode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">档案接收人：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.orgCode}" readonly name="orgCode"  />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">接收人电话：</div>
+						<div class=" pull-left">
+							<input type="text"  th:value="${recOffer.pfileToPhone}"  readonly name="pfileToPhone"  />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<header><strong>户口迁移信息</strong></header>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">户口是否在学校：</div>
+						<div class=" pull-left">
+
+                            <span th:if="${recOffer.isSchHuKou eq '1' }" >
+                                    <input type="text" th:value="是" name="haveEduHukou"/>
+                                    </span>
+                            <span th:if="${recOffer.isSchHuKou eq '0'}" >
+                                    <input type="text" th:value="否" name="haveEduHukou"/>
+                                    </span>
+
+                        </div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-group">
+						<div class="pull-left" for="">户口迁移地址：</div>
+						<div class=" pull-left">
+							<input type="text" th:value="${recOffer.hukouToAddress}"  readonly name="hukouToAddress"  />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<header><strong>备注</strong></header>
+					<textarea  name="" rows="3" ></textarea>
+				</div>
+				</form>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:inline="JavaScript">
+    var errorMsg = [[${errorMsg}]];
+    if (errorMsg!=null) {
+        alert(errorMsg);
+    }
+</script>
+</body>
+</html>

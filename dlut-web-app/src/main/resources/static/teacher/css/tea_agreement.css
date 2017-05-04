@@ -1,0 +1,18 @@
+.main .row{
+	font-size: 18px;
+	border:1px solid #000;
+	margin-top:50px;
+	padding: 30px;
+	position: relative;
+}
+input{
+	background-color: #f8f8f8;
+	border: none;
+}
+.row header{
+	position: absolute;
+	top: -14px;
+	left: 0;
+	background: #f8f8f8;
+}
+

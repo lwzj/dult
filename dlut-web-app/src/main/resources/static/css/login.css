@@ -1,0 +1,32 @@
+html{
+	height: 100%;
+}
+body{
+	height: 100%;
+	background: url(../img/timg.png) center  no-repeat;
+	background-size: cover;
+	-ms-behavior: url(../css/backgroundsize.min.htc);
+	behavior: url(../css/backgroundsize.min.htc);
+	margin:0 ;
+	width: 100%;
+}
+.form-signup{
+	margin:150px auto;
+	max-width: 390px;
+	position: relative;
+	background: #fff;
+	border-radius:5px ;
+	padding:15px 35px;
+}
+.signup-title{
+	position: absolute;
+	top:-60px;
+	left: 0;
+	text-align: center;
+	width: 100%;
+	color:#fff;
+}
+
+.signup-footer{
+	padding:20px;
+}

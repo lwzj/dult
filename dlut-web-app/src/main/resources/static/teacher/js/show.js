@@ -1,0 +1,14 @@
+$(function(){
+	$(".pass").on("click",function(){
+		window.location.href="/app/teacher/agreerecOffer?id="+$("[name=id]").val()
+	})
+	$(".noPass").on("click",function(){
+		window.location.href="/app/teacher/noPassOffer?id="+$("[name=id]").val()+"&auditStatus=02&noPassReason="+$("[name=noPassReason]").val()
+	})
+	$(".passY").on("click",function(){
+		window.location.href="/app/teacher/agreerecOffer?id="+$("[name=id]").val()
+	})
+	$(".noPassY").on("click",function(){
+		window.location.href="/app/teacher/noPassOffer?id="+$("[name=id]").val()+"&auditStatus=04&noPassReason="+$("[name=noPassReason]").val()
+	})
+})

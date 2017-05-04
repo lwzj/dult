@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html  class="no-js" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="stylesheet" href="../../static/teacher/css/index.css" th:href="@{/teacher/css/index.css}"/>
+<link rel="stylesheet" type="text/css" href="../../static/css/BeatPicker.min.css" th:href="@{/css/BeatPicker.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../../static/css/page.css" th:href="@{/css/page.css}">
+<script type="text/javascript" src="../../static/js/jquery-1.10.2.min.js"  th:src="@{/js/jquery-1.10.2.min.js}"></script>
+<script type="text/javascript" src="../../static/js/bootstrap.js"  th:src="@{/js/bootstrap.js}"></script>
+<script src="../../static/js/BeatPicker.min.js" th:src="@{/js/BeatPicker.min.js}"></script>
+<script src="../../static/js/page.js" th:src="@{/js/page.js}"></script>
+<script type="text/javascript" src="../../static/teacher/js/tea_enrollmentPage.js" th:src="@{/teacher/js/tea_enrollmentPage.js}"></script>
+<!--[if lte IE 9]>
+	<script src="../../static/company/js/respond.js" th:src="@{/company/js/respond.js}"></script>
+	<script src="../../static/company/js/html5shiv.min.js" th:src="@{/company/js/html5shiv.min.js}"></script>
+<![endif]-->
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a th:href="@{/}" class="btn hidden-xs"><img src="../../static/img/test.png" th:src="@{/img/test.png}" style="width:150px"/></a>
+        <h2 class="btn btn-title ">大连理工大学就业管理与服务平台</h2>
+    </div>
+    <div class=" navbar-collapse  collapse">
+        <ul class="nav navbar-nav navbar-right ">
+            <li ><a th:text="${session.user.depName}" th:data-id="${session.user.id}" id="identity">我是企业</a></li>
+            <li><a th:href="@{/logout.html}" class="btn btn-default">退出</a></li>
+            <li><a></a></li>
+        </ul>
+    </div>
+
+</nav>
+<section class="container-fluid con">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-3" style="z-index: 999;">
+            <div class="collapse navbar-collapse">
+                <aside class="aside">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>我的主页</a></li>
+                        <li><a th:href="@{/teacher/tea_agreementReview.html}"><span class="glyphicon glyphicon-align-left"></span>签约审核</a></li>
+                        <li><a th:href="@{/teacher/tea_absentReview.html}"><span class="glyphicon glyphicon-align-left"></span>违约审核</a></li>
+                        <li><a th:href="@{/teacher/teaEmploymentLook.html}"><span class="glyphicon glyphicon-align-left"></span>派遣查询</a></li>
+                        <li><a th:href="@{/teacher/listRessignApplication.html}"><span></span>改派查询</a></li>
+                        <li class="active"><a th:href="@{/teacher/teaEnrollment.html }"><span class="glyphicon glyphicon-align-left"></span>生源信息</a></li>
+                        <li><a th:href="@{/teacher/job.html}"><span></span>就业去向</a></li>
+                        <li><a th:href="@{/teacher/teaBlankBook}"><span></span>空白协议书</a></li>
+                        <li><a th:href="@{/teacher/teaDepartStusAudit.html}"><span></span>学籍审核</a></li>
+                        <li><a th:href="@{/teacher/listCode.html}"><span></span>编码表</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-9">
+            <div class="main">
+				<h2 style="font:30px/1 '微软雅黑'"><strong>生源信息</strong></h2>
+				<div class="row" style="margin-bottom: 30px;">
+	    				<button id="btn"  class="btn btn-primary pull-right" style="margin-bottom: 30px;">筛选</button>
+	    			<div class="clearfix"></div>
+	    			<div class="col-lg-3">
+	    				<input type="text" id = "stuNo" name="stuNo" class="form-control" placeholder="学号"/>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<input type="text" id = "name"  name="name" class="form-control" placeholder="姓名"/>
+	    			</div>
+	    			<div class="col-lg-3">
+                        <select name="gender" id = "gender" class="form-control">
+                            <option value="">--性别--</option>
+                            <option th:each="gender, genderS : ${allGender}" th:value="${gender.key}" th:text="${gender.value}"></option>
+                        </select>
+                    </div>
+	    			<div class="col-lg-3">
+                        <select name="ethnic" id = "ethnic" class="form-control">
+                            <option value="">--民族--</option>
+                            <option th:each="ethnic, ethnicS : ${allEthnics}" th:value="${ethnic.key}" th:text="${ethnic.value}"></option>
+                        </select>
+                    </div>
+	    			<div class="col-lg-3">
+                        <select name="majorCode" id = "majorCode" class="form-control">
+                            <option value="">--专业--</option>
+                            <option th:each="majorCode, majorCodeS : ${allMajor}" th:value="${majorCode.key}" th:text="${majorCode.value}"></option>
+                        </select>
+	    				</div>
+	    			<div class="col-lg-3">
+	    				<select id = "eduYear" name="eduYear"class="form-control">
+    						<option value="" selected>--学制--</option>
+                            <option th:each="eduYear, eduYearS : ${allEduYear}" th:value="${eduYear.key}" th:text="${eduYear.value}"></option>
+
+                        </select>
+	    			</div>
+	    				<div class="col-lg-3">
+	    				<select id = "eduMode" name="eduMode"class="form-control">
+                            <option value="" selected>--培养方式--</option>
+                            <option th:each="eduMode, eduModeS : ${allEduMode}" th:value="${eduMode.key}" th:text="${eduMode.value}"></option>
+                        </select>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<input type="text" id = "endDate"  name="endDate" class="form-control" placeholder="毕业年份"/>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<select  id = "departmentId" name="departmentId" class="form-control">
+	    					<option value="">--院系--</option>
+                            <option th:each="departmentId, departmentIdS : ${allAcademy}" th:value="${departmentId.key}" th:text="${departmentId.value}"></option>
+                        </select>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<select  id = "status" name="status" class="form-control">
+    						<option value="" selected>--审核状态--</option>
+                            <option th:each="status, statusS : ${allAuditStatus}" th:value="${status.key}" th:text="${status.value}"></option>
+                        </select>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<input type="text" id = "tutorName" name="tutorName" class="form-control" placeholder="导师"/>
+	    			</div>
+	    			<div class="col-lg-3">
+	    				<select id = "eduDegree" name="eduDegree"class="form-control">
+    						<option value="" selected>--学历--</option>
+                            <option th:each="eduDegree, eduDegreeS : ${allEduDegree}" th:value="${eduDegree.key}" th:text="${eduDegree.value}"></option>
+    					</select>
+	    			</div>
+	    			<div class="clearfix" style="padding:30px"></div>
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover" style="text-align: center;">
+							<thead>
+								<tr class="info">
+									<th>上报</th><th>学号</th><th>姓名</th><th>性别</th><th>学制</th><th>民族</th><th>毕业时间</th><th>专业</th><th>导师</th><th>培养方式</th><th>详情</th></tr>
+							</thead>
+							 <tbody>
+							</tbody>
+						</table>
+ 						<nav aria-label="Page navigation" style="text-align: center;">
+                            <ul class="page" maxshowpageitem="10" pagelistcount="5"  id="page"></ul>
+                       </nav>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    	<select id="number" class="form-control ">
+                    		<option value="10">一页显示10条数据</option>
+                    		<option value="20">一页显示20条数据</option>
+                    		<option value="50">一页显示50条数据</option>
+                    	</select>
+                   </div>
+				</form>
+				</div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

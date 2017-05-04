@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/teacher/css/index.css" th:href="@{/teacher/css/index.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/teacher/css/tea_absent.css"
+          th:href="@{/teacher/css/tea_absent.css}"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.10.2.min.js"
+            th:src="@{/js/jquery-1.10.2.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="../../static/teacher/js/show.js" type="text/javascript" th:src="@{/teacher/js/show.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="../../static/company/js/respond.js" th:src="@{/company/js/respond.js}"></script>
+    <script src="../../static/company/js/html5shiv.min.js" th:src="@{/company/js/html5shiv.min.js}"></script>
+    <![endif]-->
+
+    <!-- 当修改审核状态后会 弹出提示框修改是否成功 -->
+    <script th:inline="JavaScript">
+        window.onload = function () {
+            if([[${msg}]]!=null){
+                alert([[${msg}]]);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a th:href="@{/}" class="btn hidden-xs"><img src="../../static/img/test.png" style="width:150px"/></a>
+        <h2 class="btn btn-title ">大连理工大学就业管理与服务平台</h2>
+    </div>
+    <div class=" navbar-collapse  collapse">
+        <ul class="nav navbar-nav navbar-right ">
+            <li><a th:text="${session.user.depName}" th:data-id="${session.user.id}" id="identity">我是教师</a></li>
+            <li><a th:href="@{/logout.html}" class="btn btn-default">退出</a></li>
+            <li><a></a></li>
+        </ul>
+    </div>
+
+</nav>
+<section class="container-fluid con">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-3" style="z-index: 999;">
+            <div class="collapse navbar-collapse">
+                <aside class="aside">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a th:href="@{/}"><span class="glyphicon glyphicon-align-left"></span>我的主页</a></li>
+                        <li><a th:href="@{/teacher/tea_agreementReview.html}"><span
+                            class="glyphicon glyphicon-align-left"></span>签约审核</a></li>
+                        <li class="active"><a th:href="@{/teacher/tea_absentReview.html}"><span
+                            class="glyphicon glyphicon-align-left"></span>违约审核</a></li>
+                        <li><a th:href="@{/teacher/teaEmploymentLook.html}"><span
+                            class="glyphicon glyphicon-align-left"></span>派遣查询</a></li>
+                        <li><a th:href="@{/teacher/listRessignApplication.html}"><span></span>改派查询</a></li>
+                        <li><a th:href="@{/teacher/teaEnrollment.html}"><span
+                            class="glyphicon glyphicon-align-left"></span>生源信息</a></li>
+                        <li><a th:href="@{/teacher/job.html}"><span></span>就业去向</a></li>
+                        <li><a th:href="@{/teacher/teaBlankBook}"><span></span>空白协议书</a></li>
+                        <li><a th:href="@{/teacher/teaDepartStusAudit.html}"><span></span>学籍审核</a></li>
+                        <li><a th:href="@{/teacher/listCode.html}"><span></span>编码表</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-9">
+            <div class="main">
+                <h2 style="font:30px/1 '微软雅黑'"><strong>违约详情</strong></h2>
+                <form action="/teacher/updateVioAudit1" method="post" class="form-horizontal col-lg-8">
+                    <div class="row">
+                        <input type="hidden" th:value="${vad.id}" name="id"/>
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">姓名：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" readonly name="stuName" th:value="${vad.stuName}"/>
+                        </div>
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">学号：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" readonly name="stuNo" th:value="${vad.stuNo}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">院系：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="department" th:value="${vad.department}" readonly/>
+                        </div>
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">专业：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="majorCode" th:value="${vad.majorName}" readonly/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">单位名称：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="department" th:value="${vad.recName}" readonly/>
+                        </div>
+                    </div>
+                    <div class="row" style="">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">违约原因：</label>
+                        <div class="col-lg-9 col-md-9 col-sm-9">
+                            <input type="text" name="reason" th:value="${#pubcode.codeName('violateReason',vad.reason)}"
+                                   readonly/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">申请理由：</label>
+                        <div class="col-lg-9 col-md-9 col-sm-9">
+                            <textarea name="applyReason" readonly th:text="${vad.applyReason}" rows="4"
+                                      style="background: #f8f8f8;" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">申请日期：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" id="applicationTime" name="applicationTime" readonly/>
+                            <script th:inline="JavaScript">
+                                var at = [[${vad.applicationTime}]];
+                                var minute = at.minute;
+                                if(minute<10){ minute = '0'+minute;}
+                                var hour = at.hour;
+                                if(hour<10){ hour = '0'+hour;}
+                                var day = at.dayOfMonth;
+                                if(day<10){ day = '0'+day;}
+                                var month = at.monthValue;
+                                if(month<10){month = '0'+month;}
+                                var date = at.year+'-'+month+'-'+day+' '+hour+':'+minute;
+                                $('#applicationTime').val(date);
+
+                            </script>
+                        </div>
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">违约金：</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" th:value="${vad.cost}" name="cost" readonly/>
+                        </div>
+                    </div>
+
+                    <!-- 若是院系老师 显示下面信息  -->
+                    <div th:if="${session.user.principal eq 'ACADEMY' or session.user.principal eq 'ACADMIN'}">
+                        <div class="row">
+                            <label class="col-lg-3 col-md-3 col-sm-3 control-label">校审核状态：</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="text" th:value="${#pubcode.codeName('auditStatus',vad.schAuditStatus)}" readonly class="val"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <label class="col-lg-3 col-md-3 col-sm-3 control-label">
+                            校级意见：
+                        </label>
+                        <div class="col-lg-9 col-md-9">
+                            <input type="text" th:value="${vad.schNoPassReason}" readonly/>
+                        </div>
+                        </div>
+
+                            <div class="row">
+                                <label class="col-lg-3 col-md-3 col-sm-3 control-label">审核状态：</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <span th:if="${vad.departAuditStatus eq '00' or vad.departAuditStatus eq '01'}">
+                                    <input type="radio" name="auditStatus" value="01" checked/>同意&nbsp;
+                                    <input type="radio" name="auditStatus" value="02"/>不同意
+                                </span>
+                                    <span th:if="${vad.departAuditStatus eq '02'}">
+                                    <input type="radio" name="auditStatus" value="01"/>同意&nbsp;
+                                    <input type="radio" name="auditStatus" value="02" checked/>不同意
+                                </span>
+                                </div>
+                            </div>
+                        <div class="row">
+                        <div class="why">
+                            <label class="col-lg-3 col-md-3 col-sm-3 control-label">
+                                院系意见：
+                            </label>
+                            <div class="col-lg-9 col-md-9">
+                                <textarea name="noPassReason" th:text="${vad.departNoPassReason}" rows="3"
+                                          class="form-control" placeholder="审核不通过时填写"></textarea>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- /院老师显示信息结束 -->
+
+
+                    <!-- 若是校级老师显示 页面显示信息 -->
+                    <div th:if="${session.user.principal eq 'SCHOOL' or session.user.principal eq 'SCHADMIN'}">
+                        <div class="row">
+                            <label class="col-lg-3 col-md-3 col-sm-3 control-label">院审核状态：</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="text" th:value="${#pubcode.codeName('auditStatus',vad.departAuditStatus)}"
+                                       readonly class="val"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-lg-3 col-md-3 col-sm-3 control-label">
+                                院系意见：
+                            </label>
+                            <div class="col-lg-9 col-md-9">
+                                <input type="text" th:value="${vad.departNoPassReason}" readonly/>
+                            </div>
+                        </div>
+
+                            <div class="row">
+                                <label class="col-lg-3 col-md-3 col-sm-3 control-label">审核状态：</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <span th:if="${vad.schAuditStatus eq '00' or vad.schAuditStatus eq '01'}">
+                                    <input type="radio" name="auditStatus" value="01" checked/>同意&nbsp;
+                                    <input type="radio" name="auditStatus" value="02"/>不同意
+                                    </span>
+                                    <span th:if="${vad.schAuditStatus eq '02'}">
+                                    <input type="radio" name="auditStatus" value="01"/>同意&nbsp;
+                                    <input type="radio" name="auditStatus" value="02" checked/>不同意
+                                    </span>
+                                </div>
+                            </div>
+                        <div class="row">
+                        <div class="why">
+                            <label class="col-lg-3 col-md-3 col-sm-3 control-label">
+                                校级意见：
+                            </label>
+                            <div class="col-lg-9 col-md-9">
+                                <textarea name="noPassReason" th:text="${vad.schNoPassReason}" rows="3"
+                                          class="form-control" placeholder="审核不通过时填写"></textarea>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    <!-- /校显示信息结束 -->
+
+                    <div class="row">
+                        <div class="col-lg-3 col-lg-offset-3 col-md-3 col-md-offset-3 col-sm-3 col-sm-offset-3">
+                            <input type="submit" value="提交" class="btn btn-primary form-control"/>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
